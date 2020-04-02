@@ -17,24 +17,22 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"zls.one","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"zls.one","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":"flat"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":true,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":true,"nav":null,"activeClass":"gitalk"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"manual","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="Linkedin              Github         Leshao ZhangPh.D. in cognitive science with the background in computer science and design. Experienced in computer programming and algorithm design.">
+  <meta name="description" content="Leshao ZhangPh.D. in cognitive science with the background in computer science and design. Experienced in computer programming and algorithm design. He was employed by Queen Mary University of London">
 <meta property="og:type" content="website">
 <meta property="og:title" content="About Me">
-<meta property="og:url" content="https://zls.one/about/Leshao%20Zhang.html">
+<meta property="og:url" content="https://zls.one/about/Leshao-Zhang.html">
 <meta property="og:site_name" content="既来之，则乐之 {Enjoy!}">
-<meta property="og:description" content="Linkedin              Github         Leshao ZhangPh.D. in cognitive science with the background in computer science and design. Experienced in computer programming and algorithm design.">
+<meta property="og:description" content="Leshao ZhangPh.D. in cognitive science with the background in computer science and design. Experienced in computer programming and algorithm design. He was employed by Queen Mary University of London">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://zls.one/about/Selfie.png">
-<meta property="article:published_time" content="2020-03-28T11:41:36.837Z">
-<meta property="article:modified_time" content="2020-03-28T11:41:36.837Z">
+<meta property="article:published_time" content="2020-04-02T09:24:25.739Z">
+<meta property="article:modified_time" content="2020-04-02T09:24:25.739Z">
 <meta property="article:author" content="Leshao Zhang">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://zls.one/about/Selfie.png">
 
-<link rel="canonical" href="https://zls.one/about/Leshao%20Zhang">
+<link rel="canonical" href="https://zls.one/about/Leshao-Zhang">
 
 
 <script id="page-configurations">
@@ -107,6 +105,7 @@
 
   <div class="site-nav-right">
     <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -123,7 +122,7 @@
   </li>
         <li class="menu-item menu-item-about-me">
 
-    <a href="/about/Leshao%20Zhang.html" rel="section">About Me</a>
+    <a href="/about/Leshao-Zhang.html" rel="section">About Me</a>
 
   </li>
         <li class="menu-item menu-item-archives">
@@ -131,11 +130,38 @@
     <a href="/archives/" rel="section">Archives</a>
 
   </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger">Search
+        </a>
+      </li>
   </ul>
 </nav>
 
 
 
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
 
 </div>
     </header>
@@ -177,21 +203,7 @@
       
       
       <div class="post-body">
-          <div class="row">
-<div class="col-md-4" style='padding-bottom:20px'>
-  <img src='Selfie.png' class='img-responsive'/>
-  <div class="text-center">   
-    <a href='https://www.linkedin.com/in/leshao-zhang' target="_blank" rel="noopener">Linkedin</a>
-  </div> 
-  <div class="text-center">
-    <a href='https://github.com/Leshao-Zhang' target="_blank" rel="noopener">  Github</a>
-  </div>
-</div>
-
-
-<div class="col-md-7">
-
-<h1 id="Leshao-Zhang"><a href="#Leshao-Zhang" class="headerlink" title="Leshao Zhang"></a>Leshao Zhang</h1><p>Ph.D. in cognitive science with the background in computer science and design. Experienced in computer programming and algorithm design. He was employed by Queen Mary University of London and GoldSmiths, University of London as Teaching Assistant and Associate Lecturer for over one year for the courses of Graphic User Interface, Design for Human Interaction, Software and Network Service Design, Multimedia Techniques, Web Programming for undergraduates and postgraduates. Part of his research has been published at well know conferences and journals and has good impact in its field.</p>
+          <h1 id="Leshao-Zhang"><a href="#Leshao-Zhang" class="headerlink" title="Leshao Zhang"></a>Leshao Zhang</h1><p>Ph.D. in cognitive science with the background in computer science and design. Experienced in computer programming and algorithm design. He was employed by Queen Mary University of London and GoldSmiths, University of London as Teaching Assistant and Associate Lecturer for over one year for the courses of Graphic User Interface, Design for Human Interaction, Software and Network Service Design, Multimedia Techniques, Web Programming for undergraduates and postgraduates. Part of his research has been published at well know conferences and journals and has good impact in its field.</p>
 <h2 id="Keywords"><a href="#Keywords" class="headerlink" title="Keywords"></a>Keywords</h2><p>Human Computer Interaction, Human Interaction, Virtual Reality, User Experience Research.</p>
 <h2 id="Research-Interests"><a href="#Research-Interests" class="headerlink" title="Research Interests"></a>Research Interests</h2><p>His research focused on human (computer) interaction, nonverbal interaction in Virtual Reality and consumer behavior in the Immersive Virtual Environment. He is experienced in big data video analysis, motion capture techniques as well as hardware interaction. His Ph.D. project is about non-verbal Interaction in Virtual Reality. It looked into how people’s nonverbal behavior affects the people’s preferences in the Virtual Reality. Vicon motion capture system was used to support participant’s embodied experience as well as collecting movement data for analysis. Complex dynamics analysis was used in the research.</p>
 <h2 id="Education"><a href="#Education" class="headerlink" title="Education"></a>Education</h2><table>
@@ -220,8 +232,7 @@
 <p>Wu, Y., <strong>Zhang, L.</strong>, Bryan-Kinns, N., &amp; Barthet, M. (2017). Open symphony: Creative participation for audiences of live music performances. IEEE MultiMedia, 24(1), 48-62.</p>
 <p>Hayes, K., Barthet, M., Wu, Y., <strong>Zhang, L.</strong>, &amp; Bryan-Kinns, N. (2016, May). A participatory live music performance with the Open Symphony system. Proceedings of the 2016 CHI Conference Extended Abstracts on Human Factors in Computing Systems (pp. 313-316). ACM.</p>
 <p>Zhang, X. Z., <strong>Zhang, L.</strong>, &amp; Luo, W. (2018, August). A task assignment model and its application for crowdsourcing project factored multi-objective and risks. In Proceedings of the 2018 International Conference on Information Management &amp; Management Science (pp. 174-179). ACM.</p>
-</div>
-</div>
+
       </div>
       
       
@@ -236,6 +247,7 @@
 
           </div>
           
+    <div class="comments" id="gitalk-container"></div>
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -282,12 +294,13 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Leshao-Zhang"><span class="nav-number">1.</span> <span class="nav-text">Leshao Zhang</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Keywords"><span class="nav-number">1.1.</span> <span class="nav-text">Keywords</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Research-Interests"><span class="nav-number">1.2.</span> <span class="nav-text">Research Interests</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Education"><span class="nav-number">1.3.</span> <span class="nav-text">Education</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Publications"><span class="nav-number">1.4.</span> <span class="nav-text">Publications</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Leshao Zhang"
+      src="/about/Selfie.png">
   <p class="site-author-name" itemprop="name">Leshao Zhang</p>
   <div class="site-description" itemprop="description"></div>
 </div>
@@ -308,6 +321,12 @@
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
         <a href="https://github.com/Leshao-Zhang" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Leshao-Zhang" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:zhangleshao#gmail.com" title="E-Mail → mailto:zhangleshao#gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/zhangleshao" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;zhangleshao" rel="noopener" target="_blank"><i class="fab fa-twitter fa-fw"></i>Twitter</a>
       </span>
   </div>
 
@@ -356,6 +375,10 @@
 
   
   <script src="/lib/anime.min.js"></script>
+  <script src="/lib/pjax/pjax.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/medium-zoom@1/dist/medium-zoom.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 
@@ -369,6 +392,65 @@
 
 <script src="/js/next-boot.js"></script>
 
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '#page-configurations',
+    '.content-wrap',
+    '.post-toc-wrap',
+    '.languages',
+    '#pjax'
+  ],
+  switches: {
+    '.post-toc-wrap': Pjax.switches.innerHTML
+  },
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+window.addEventListener('pjax:success', () => {
+  document.querySelectorAll('script[data-pjax], script#page-configurations, #pjax script').forEach(element => {
+    var code = element.text || element.textContent || element.innerHTML || '';
+    var parent = element.parentNode;
+    parent.removeChild(element);
+    var script = document.createElement('script');
+    if (element.id) {
+      script.id = element.id;
+    }
+    if (element.className) {
+      script.className = element.className;
+    }
+    if (element.type) {
+      script.type = element.type;
+    }
+    if (element.src) {
+      script.src = element.src;
+      // Force synchronous loading of peripheral JS.
+      script.async = false;
+    }
+    if (element.dataset.pjax !== undefined) {
+      script.dataset.pjax = '';
+    }
+    if (code !== '') {
+      script.appendChild(document.createTextNode(code));
+    }
+    parent.appendChild(script);
+  });
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
 
 
 
@@ -377,6 +459,8 @@
 
 
 
+  
+<script src="/js/local-search.js"></script>
 
 
 
@@ -388,9 +472,35 @@
 
 
 
+
+
+    <div id="pjax">
   
 
   
 
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : '7f0a143a363d3ac63e32',
+      clientSecret: '20213735ab5caca45a564db24fb500fdb6e208ed',
+      repo        : 'Leshao-Zhang.github.io',
+      owner       : 'Leshao-Zhang',
+      admin       : ['Leshao-Zhang'],
+      id          : 'a5637ea5e417fa732901aebd734ef996',
+        language: '',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
+
+    </div>
 </body>
 </html>
