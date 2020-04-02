@@ -1192,17 +1192,6 @@ pre .javascript .function {
   margin-right: 10px;
   vertical-align: middle;
 }
-.links-of-author a::before,
-.links-of-author span.exturl::before {
-  background: #e069ec;
-  border-radius: 50%;
-  content: ' ';
-  display: inline-block;
-  height: 4px;
-  margin-right: 3px;
-  vertical-align: middle;
-  width: 4px;
-}
 .sidebar-button {
   margin-top: 15px;
 }
