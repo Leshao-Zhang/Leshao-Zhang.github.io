@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://zls.one/admin/index.html</loc>
+    
+    <lastmod>2020-04-03T11:20:18.523Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://zls.one/categories/index.html</loc>
     
     <lastmod>2020-04-03T07:04:48.039Z</lastmod>
