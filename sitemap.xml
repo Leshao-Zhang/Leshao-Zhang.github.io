@@ -2,16 +2,30 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://zls.one/categories/index.html</loc>
+    <loc>https://zls.one/about/Leshao-Zhang.html</loc>
     
-    <lastmod>2020-04-03T07:04:48.039Z</lastmod>
+    <lastmod>2020-04-08T12:34:15.034Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://zls.one/about/Leshao-Zhang.html</loc>
+    <loc>https://zls.one/projects/index.html</loc>
     
-    <lastmod>2020-04-03T07:04:07.310Z</lastmod>
+    <lastmod>2020-04-08T12:31:17.571Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://zls.one/index.html</loc>
+    
+    <lastmod>2020-04-08T12:30:20.562Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://zls.one/categories/index.html</loc>
+    
+    <lastmod>2020-04-03T07:04:48.039Z</lastmod>
     
   </url>
   
