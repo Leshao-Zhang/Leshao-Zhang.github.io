@@ -971,6 +971,7 @@ pre .javascript .function {
   display: flex;
   flex-shrink: 0;
   padding: 0 20px;
+  padding-right: 0;
 }
 .headband {
   background: #222;
@@ -1043,6 +1044,7 @@ pre .javascript .function {
 .site-nav {
   display: block;
   padding: 0 10px;
+  padding-left: 0;
 }
 @media (max-width: 767px) {
   .site-nav {
