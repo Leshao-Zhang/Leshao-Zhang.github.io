@@ -951,17 +951,9 @@ pre .javascript .function {
 }
 .main-inner {
   margin: 0 auto;
-  width: 700px;
-}
-@media (min-width: 1200px) {
-  .main-inner {
-    width: 800px;
-  }
-}
-@media (min-width: 1600px) {
-  .main-inner {
-    width: 900px;
-  }
+  padding: 0 20px;
+  flex-grow: 1;
+  max-width: 1280px;
 }
 @media (max-width: 767px) {
   .content-wrap {
@@ -978,14 +970,14 @@ pre .javascript .function {
 .site-brand-container {
   display: flex;
   flex-shrink: 0;
-  padding: 0 10px;
+  padding: 0 20px;
 }
 .headband {
   background: #222;
   height: 3px;
 }
 .site-meta {
-/* flex-grow: 1; */
+  flex-grow: 1;
   text-align: left;
 }
 @media (max-width: 767px) {
@@ -1050,6 +1042,7 @@ pre .javascript .function {
 }
 .site-nav {
   display: block;
+  padding: 0 10px;
 }
 @media (max-width: 767px) {
   .site-nav {
@@ -1119,7 +1112,8 @@ pre .javascript .function {
 .menu-item-active a,
 .menu .menu-item a:hover,
 .menu .menu-item span.exturl:hover {
-  background: var(--menu-item-bg-color);
+  border-bottom: 2px solid;
+  border-bottom-width: thin;
 }
 .use-motion .menu-item {
   opacity: 0;
@@ -1339,18 +1333,9 @@ pre .javascript .function {
 .footer-inner {
   box-sizing: border-box;
   margin: 0 auto;
+  padding: 0 20px;
   text-align: center;
-  width: 700px;
-}
-@media (min-width: 1200px) {
-  .footer-inner {
-    width: 800px;
-  }
-}
-@media (min-width: 1600px) {
-  .footer-inner {
-    width: 900px;
-  }
+  max-width: 1280px;
 }
 .languages {
   display: inline-block;
@@ -1699,7 +1684,8 @@ pre .javascript .function {
   display: none;
 }
 .content {
-  padding-top: 40px;
+  margin-top: 20px;
+  padding: 20px 0;
 }
 @media (min-width: 992px) {
   .post-body {
@@ -1795,7 +1781,7 @@ pre .javascript .function {
   font-size: 1.5em;
   font-weight: normal;
   margin: initial;
-  text-align: center;
+  text-align: left;
   overflow-wrap: break-word;
   word-wrap: break-word;
 }
@@ -1833,7 +1819,7 @@ pre .javascript .function {
   font-family: 'inherit', "PingFang SC", "Microsoft YaHei", sans-serif;
   font-size: 0.75em;
   margin: 3px 0 60px 0;
-  text-align: center;
+  text-align: left;
 }
 .posts-expand .post-meta .post-description {
   font-size: 0.875em;
@@ -1954,9 +1940,7 @@ pre .javascript .function {
 .reward-container button {
   background: #ff2a2a;
   border: 0;
-  border-radius: 5px;
   color: #fff;
-  cursor: pointer;
   line-height: 2;
   outline: 0;
   padding: 0 15px;
@@ -1981,7 +1965,6 @@ pre .javascript .function {
   text-align: center;
 }
 .post-copyright {
-  background: var(--card-bg-color);
   border-left: 3px solid #ff2a2a;
   list-style: none;
   margin: 2em 0 0;
@@ -2284,9 +2267,6 @@ hr {
     width: auto;
   }
 }
-.content {
-  padding-top: 80px;
-}
 @media (max-width: 767px) {
   .content {
     padding-top: 60px;
@@ -2303,21 +2283,17 @@ hr {
   }
 }
 .footer {
-  background: var(--content-bg-color);
   color: var(--text-color);
   padding: 10px 0;
 }
 .footer-inner {
-  text-align: left;
+  text-align: center;
 }
 @media (max-width: 767px) {
   .footer-inner {
     text-align: center;
     width: auto;
   }
-}
-.header {
-  background: var(--content-bg-color);
 }
 .header-inner {
   align-items: center;
@@ -2374,9 +2350,6 @@ hr {
 .site-subtitle {
   display: none;
 }
-.site-nav {
-  flex-grow: 1;
-}
 @media (max-width: 767px) {
   .site-nav {
     padding: 10px 10px 0;
@@ -2395,8 +2368,8 @@ hr {
 }
 .menu .menu-item a,
 .menu .menu-item span.exturl {
-  border-radius: 2px;
-  padding: 0 10px;
+  margin: 0 10px;
+  padding: 0;
   transition-property: background;
 }
 @media (max-width: 767px) {
@@ -2428,15 +2401,26 @@ hr {
 .posts-expand .post-eof {
   display: none;
 }
+.posts-expand .post-block {
+  border: 1px solid #f0f0f0;
+  border-radius: 4px;
+  padding: 20px 100px;
+}
 .posts-expand .post-block:not(:first-child) {
   margin-top: 120px;
 }
 .posts-expand .post-title,
 .posts-expand .post-meta {
-  text-align: center;
+  text-align: left;
+}
+.posts-expand .post-title {
+  margin-top: 30px;
 }
 .posts-expand .post-body img {
   margin-left: 0;
+}
+.posts-expand .post-body {
+  margin-bottom: 30px;
 }
 .posts-expand .post-tags {
   text-align: left;
