@@ -20,28 +20,33 @@
     var CONFIG = {"hostname":"zls.one","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":"flat"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":true,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":true,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"manual","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="既来之，则乐之 {Enjoy!}">
-<meta property="og:url" content="https://zls.one/blog/index.html">
+  <meta name="description" content="BLINK在做过Arduino第一个实验BLINK之后看这篇笔记，可以加深对Arduino的理解。这篇文章不会讲代码怎么写，仅对电路实验的基本原理说明。 在学习Arduino时第一个电路实验大多为BLINK连接LED实验。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Arduino BLINK LED">
+<meta property="og:url" content="https://zls.one/2020/06/15/Arduino%E5%AD%A6%E4%B9%A0%E5%9B%9E%E9%A1%BE%E7%AC%94%E8%AE%B0/index.html">
 <meta property="og:site_name" content="既来之，则乐之 {Enjoy!}">
+<meta property="og:description" content="BLINK在做过Arduino第一个实验BLINK之后看这篇笔记，可以加深对Arduino的理解。这篇文章不会讲代码怎么写，仅对电路实验的基本原理说明。 在学习Arduino时第一个电路实验大多为BLINK连接LED实验。">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-06-15T14:13:45.000Z">
+<meta property="article:modified_time" content="2020-06-15T15:05:33.141Z">
 <meta property="article:author" content="Leshao Zhang">
+<meta property="article:tag" content="Arduino 欧姆定律 电路 LED">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://zls.one/blog/">
+<link rel="canonical" href="https://zls.one/2020/06/15/Arduino%E5%AD%A6%E4%B9%A0%E5%9B%9E%E9%A1%BE%E7%AC%94%E8%AE%B0/">
 
 
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome : true,
-    isPost : false,
+    isHome : false,
+    isPost : true,
     lang   : 'en'
   };
 </script>
 
-  <title>既来之，则乐之 {Enjoy!}</title>
+  <title>Arduino BLINK LED | 既来之，则乐之 {Enjoy!}</title>
   
 
 
@@ -187,9 +192,10 @@
         <div class="content-wrap">
           
 
-          <div class="content index posts-expand">
+          <div class="content post posts-expand">
             
-      
+
+    
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
@@ -205,10 +211,9 @@
       <meta itemprop="name" content="既来之，则乐之 {Enjoy!}">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/06/15/Arduino%E5%AD%A6%E4%B9%A0%E5%9B%9E%E9%A1%BE%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">Arduino BLINK LED</a>
-        </h2>
+        <h1 class="post-title" itemprop="name headline">
+          Arduino BLINK LED
+        </h1>
 
         <div class="post-meta">
             <span class="post-meta-item">
@@ -231,6 +236,13 @@
             </span>
 
           
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
   
   <span class="post-meta-item">
     
@@ -255,132 +267,107 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="BLINK"><a href="#BLINK" class="headerlink" title="BLINK"></a>BLINK</h2><p>在做过Arduino第一个实验BLINK之后看这篇笔记，可以加深对Arduino的理解。这篇文章不会讲代码怎么写，仅对电路实验的基本原理说明。</p>
+        <h2 id="BLINK"><a href="#BLINK" class="headerlink" title="BLINK"></a>BLINK</h2><p>在做过Arduino第一个实验BLINK之后看这篇笔记，可以加深对Arduino的理解。这篇文章不会讲代码怎么写，仅对电路实验的基本原理说明。</p>
 <p>在学习Arduino时第一个电路实验大多为BLINK连接LED实验。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/06/15/Arduino%E5%AD%A6%E4%B9%A0%E5%9B%9E%E9%A1%BE%E7%AC%94%E8%AE%B0/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
+<a id="more"></a>
+
+<p>将电路按图1连好，并把example里basic中的blink代码上传到Arduino之后，就可以看到LED灯一闪一闪了。</p>
+<p>![Arduino学习笔记（一）figure 1](/Users/leshao/Documents/blog/source/img/Arduino学习笔记（一）figure 1.png)</p>
+<p><em>Figure 1 LED 连接方法</em></p>
+<p>这个实验非常严简单，基本不会有太多惊讶与疑问。但如果仔细思考，还是会发现许多问题的。比如在这个实验中，我们知道给LED加上560欧的电阻是为了限流，但为什么要用560欧的电阻而不用1K欧，10K欧呢？</p>
+<p>网上的资料显示，LED的工作电压一般为1.5-2V，工作电流一般为10-20ma，反向击穿电压为5V。而Arduino的pin口提供5V的电压，需要的电阻为150欧到350欧。根据欧姆定律，计算公式为：</p>
+<p>![equation ohm](/Users/leshao/Documents/blog/source/img/equation ohm.png)</p>
+<p>其中r为要求的电阻；Up 为pin口电压，此处为5V；UL 为LED的工作电压；I为LED的工作电流。</p>
+<p><a href="http://www.21ic.com/calculator/LEDfaguang.htm" target="_blank" rel="noopener">http://www.21ic.com/calculator/LEDfaguang.htm</a> 提供了LED电路电阻计算器（图2）。</p>
+<p>![Arduino学习笔记（一）figure 2](/Users/leshao/Documents/blog/source/img/Arduino学习笔记（一）figure 2.png)</p>
+<p><em>Figure 2 LED电路电阻计算器</em></p>
+<p>经过计算，我们用的560欧的电阻比正常的LED电路需要的电阻大了一些。</p>
+<p>这是因为我们的实验配发的Arduino套件中仅配发了560欧，2.2K欧与10K欧三种电阻。那么能用的就只有560欧这个最小的电阻了。</p>
+<p>用过大电阻并非没有好处，这样做可以尽量保护电路不会过载，代价仅是LED稍微不那么亮了。当然需要注意的是在某些要求特定电压的电路中是不可以将就用电阻的。</p>
+<p>这就是第一个Arduino实验中隐藏的小问题了。</p>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>在连接每一个电路的时候，一定要查清楚每个元器件的参数，其工作电压，工作电流等。通过合适的搭配电路元器件避免烧毁Arduino控制板和元器件。</p>
+
     </div>
 
     
     
     
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    Donate
+  </button>
+  <div id="qr" style="display: none;">
       
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://zls.one/2020/03/22/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/about/Selfie.jpg">
-      <meta itemprop="name" content="Leshao Zhang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="既来之，则乐之 {Enjoy!}">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/03/22/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-03-22 13:16:21" itemprop="dateCreated datePublished" datetime="2020-03-22T13:16:21+08:00">2020-03-22</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-04-02 19:10:42" itemprop="dateModified" datetime="2020-04-02T19:10:42+08:00">2020-04-02</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/post/" itemprop="url" rel="index"><span itemprop="name">post</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine: </span>
-    
-    <a title="valine" href="/2020/03/22/hello-world/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2020/03/22/hello-world/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
+      <div style="display: inline-block;">
+        <img src="/img/hotlink-ok/wechat.png" alt="Leshao Zhang WeChat Pay">
+        <p>WeChat Pay</p>
+      </div>
       
-          <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/03/22/hello-world/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
+      <div style="display: inline-block;">
+        <img src="/img/hotlink-ok/alipay.jpeg" alt="Leshao Zhang Alipay">
+        <p>Alipay</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/img/hotlink-ok/paypal.jpeg" alt="Leshao Zhang PayPal">
+        <p>PayPal</p>
+      </div>
+
+  </div>
+</div>
+
         
-      
-    </div>
 
-    
-    
-    
+            
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:  </strong>Leshao Zhang
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link: </strong>
+    <a href="https://zls.one/2020/06/15/Arduino%E5%AD%A6%E4%B9%A0%E5%9B%9E%E9%A1%BE%E7%AC%94%E8%AE%B0/" title="Arduino BLINK LED">https://zls.one/2020/06/15/Arduino学习回顾笔记/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+<!-- Go to www.addthis.com/dashboard to customize your tools -->
+<script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5e86bc4ed66c3e92"></script>
+<h3>Share it to:</h3>
+<div class="addthis_inline_share_toolbox"></div>
+
       <footer class="post-footer">
-        <div class="post-eof"></div>
+          
+          <div class="post-tags">
+              <a href="/tags/Arduino-%E6%AC%A7%E5%A7%86%E5%AE%9A%E5%BE%8B-%E7%94%B5%E8%B7%AF-LED/" rel="tag"><i class="fa fa-tag"></i> Arduino 欧姆定律 电路 LED</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2020/03/22/hello-world/" rel="next" title="Hello World">
+      Hello World <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
+    
   </article>
   
   
-  
-
-
   
 
 
 
           </div>
           
+    <div class="comments" id="valine-comments"></div>
 
 <script>
   window.addEventListener('tabs:register', () => {
