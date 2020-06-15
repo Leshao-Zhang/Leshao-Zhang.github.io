@@ -5,18 +5,18 @@
     <url>/2020/06/15/Arduino%E5%AD%A6%E4%B9%A0%E5%9B%9E%E9%A1%BE%E7%AC%94%E8%AE%B0/</url>
     <content><![CDATA[<h2 id="BLINK"><a href="#BLINK" class="headerlink" title="BLINK"></a>BLINK</h2><p>在做过Arduino第一个实验BLINK之后看这篇笔记，可以加深对Arduino的理解。这篇文章不会讲代码怎么写，仅对电路实验的基本原理说明。</p>
 <p>在学习Arduino时第一个电路实验大多为BLINK连接LED实验。</p>
+<p>![Arduino学习笔记（一）figure 1](../img/Arduino学习笔记（一）figure 1.png)</p>
+<p><em>图 1 LED 连接方法</em></p>
 <a id="more"></a>
 
 <p>将电路按图1连好，并把example里basic中的blink代码上传到Arduino之后，就可以看到LED灯一闪一闪了。</p>
-<p>![Arduino学习笔记（一）figure 1](/Users/leshao/Documents/blog/source/img/Arduino学习笔记（一）figure 1.png)</p>
-<p><em>Figure 1 LED 连接方法</em></p>
 <p>这个实验非常严简单，基本不会有太多惊讶与疑问。但如果仔细思考，还是会发现许多问题的。比如在这个实验中，我们知道给LED加上560欧的电阻是为了限流，但为什么要用560欧的电阻而不用1K欧，10K欧呢？</p>
 <p>网上的资料显示，LED的工作电压一般为1.5-2V，工作电流一般为10-20ma，反向击穿电压为5V。而Arduino的pin口提供5V的电压，需要的电阻为150欧到350欧。根据欧姆定律，计算公式为：</p>
-<p>![equation ohm](/Users/leshao/Documents/blog/source/img/equation ohm.png)</p>
+<p>![equation ohm](../img/equation ohm.png)</p>
 <p>其中r为要求的电阻；Up 为pin口电压，此处为5V；UL 为LED的工作电压；I为LED的工作电流。</p>
 <p><a href="http://www.21ic.com/calculator/LEDfaguang.htm" target="_blank" rel="noopener">http://www.21ic.com/calculator/LEDfaguang.htm</a> 提供了LED电路电阻计算器（图2）。</p>
-<p>![Arduino学习笔记（一）figure 2](/Users/leshao/Documents/blog/source/img/Arduino学习笔记（一）figure 2.png)</p>
-<p><em>Figure 2 LED电路电阻计算器</em></p>
+<p>![Arduino学习笔记（一）figure 2](../img/Arduino学习笔记（一）figure 2.png)</p>
+<p><em>图 2 LED电路电阻计算器</em></p>
 <p>经过计算，我们用的560欧的电阻比正常的LED电路需要的电阻大了一些。</p>
 <p>这是因为我们的实验配发的Arduino套件中仅配发了560欧，2.2K欧与10K欧三种电阻。那么能用的就只有560欧这个最小的电阻了。</p>
 <p>用过大电阻并非没有好处，这样做可以尽量保护电路不会过载，代价仅是LED稍微不那么亮了。当然需要注意的是在某些要求特定电压的电路中是不可以将就用电阻的。</p>
@@ -27,33 +27,10 @@
         <category>Arduino</category>
       </categories>
       <tags>
-        <tag>Arduino 欧姆定律 电路 LED</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hello World</title>
-    <url>/2020/03/22/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<a id="more"></a>
-
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-]]></content>
-      <categories>
-        <category>post</category>
-      </categories>
-      <tags>
-        <tag>Hello</tag>
+        <tag>Arduino</tag>
+        <tag>欧姆定律</tag>
+        <tag>电路</tag>
+        <tag>LED</tag>
       </tags>
   </entry>
 </search>
