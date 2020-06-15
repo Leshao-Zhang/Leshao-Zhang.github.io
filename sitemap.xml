@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://zls.one/index.html</loc>
+    
+    <lastmod>2020-04-10T13:33:00.542Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://zls.one/about/index.html</loc>
     
     <lastmod>2020-04-08T12:40:57.603Z</lastmod>
@@ -16,13 +23,6 @@
   </url>
   
   <url>
-    <loc>https://zls.one/index.html</loc>
-    
-    <lastmod>2020-04-08T12:30:20.562Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://zls.one/categories/index.html</loc>
     
     <lastmod>2020-04-03T07:04:48.039Z</lastmod>
@@ -33,13 +33,6 @@
     <loc>https://zls.one/2020/03/22/hello-world/</loc>
     
     <lastmod>2020-04-02T11:10:42.571Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://zls.one/2020/03/25/Test/</loc>
-    
-    <lastmod>2020-03-25T10:13:25.101Z</lastmod>
     
   </url>
   
