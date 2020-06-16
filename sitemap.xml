@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://zls.one/about/index.html</loc>
+    
+    <lastmod>2020-06-16T13:42:19.357Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://zls.one/2020/06/16/Arduino-Reflection-3/</loc>
     
     <lastmod>2020-06-16T11:27:54.400Z</lastmod>
@@ -26,13 +33,6 @@
     <loc>https://zls.one/index.html</loc>
     
     <lastmod>2020-06-16T02:15:48.116Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://zls.one/about/index.html</loc>
-    
-    <lastmod>2020-04-08T12:40:57.603Z</lastmod>
     
   </url>
   
