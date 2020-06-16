@@ -6,30 +6,7 @@ const sudoku = function(ID){
     let cols = [];
     let squres = [];
 
-    for(let i=0;i<9;i++){
-        rows[i] = [];
-        cols[i] = [];
-        squres[i] = [];
-    }
-
-    const squreNo = function(x,y){
-        return Math.floor(x/3)*3+Math.floor(y/3);
-    }
-
-    for(let i=0;i<9;i++){
-        for(let j=0;j<9;j++){
-            new unit(rows[i],cols[j],squres[squreNo(i,j)]);
-        }
-    }
-
-    //UI
-    for(let squre of squres){
-        let block = document.createElement('div');
-        block.className = 'sudoBlock';
-        for(let unit of squre){
-            let input = document.createElement('input');
-            input.className = 'sudoInput';
-            input.onchange = () => {unit.value = input.value};
+    for(let i=0;i<9;i++){ rows[i]="[];" cols[i]="[];" squres[i]="[];" } const squreno="function(x,y){" return math.floor(x 3)*3+math.floor(y 3); for(let i="0;i<9;i++){" j="0;j<9;j++){" new unit(rows[i],cols[j],squres[squreno(i,j)]); ui squre of squres){ let block="document.createElement('div');" block.classname="sudoBlock" ; unit squre){ input="document.createElement('input');" input.classname="sudoInput" input.onchange="()" => {unit.value = input.value};
             block.appendChild(input);
         }
         sudo.appendChild(block);
@@ -71,4 +48,4 @@ class unit {
         }
     }
 
-}
+}</9;i++){>
