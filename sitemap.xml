@@ -2,9 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://zls.one/2020/06/16/Arduino-Reflection-2/</loc>
+    <loc>https://zls.one/2020/06/15/Arduino_Reflection/</loc>
     
-    <lastmod>2020-06-16T08:20:15.967Z</lastmod>
+    <lastmod>2020-06-16T10:58:05.615Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://zls.one/2020/06/16/Arduino_Reflection_2/</loc>
+    
+    <lastmod>2020-06-16T10:53:59.879Z</lastmod>
     
   </url>
   
@@ -12,13 +19,6 @@
     <loc>https://zls.one/index.html</loc>
     
     <lastmod>2020-06-16T02:15:48.116Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://zls.one/2020/06/15/Arduino_Reflection/</loc>
-    
-    <lastmod>2020-06-16T02:12:10.554Z</lastmod>
     
   </url>
   
