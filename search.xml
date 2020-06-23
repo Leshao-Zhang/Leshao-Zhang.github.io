@@ -181,4 +181,114 @@
         <tag>UnityHub</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Unity3D WebGL 避坑指南</title>
+    <url>/2020/06/20/Unity3D-WebGL-%E9%81%BF%E5%9D%91%E6%8C%87%E5%8D%97/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>最近做了一个Unity3D WebGL平台的项目，在此稍微总结一下在做这个项目时遇到的一些坑以及解决方案。</p>
+<h3 id="技术选型"><a href="#技术选型" class="headerlink" title="技术选型"></a>技术选型</h3><p>项目需求是在浏览器端做一个3D展示。技术方案有多个选择如three.js, unity3D等，最终选择了Unity3D还是因为以下几点原因：</p>
+<a id="more"></a>
+
+<ol>
+<li><p>Unity3D本身是一个很好的3D编辑器，我们可以很方便的在里面进行3D布局。</p>
+</li>
+<li><p>Unity3D能够直接输出编译出WebGL平台的程序。</p>
+</li>
+<li><p>Unity3D的WebGL程序是以WebAssembly编译的，性能较好（此处存疑）。</p>
+</li>
+<li><p>未来可能升级为WebXR，Unity3D能够直接支持。</p>
+</li>
+<li><p>团队具有Unity3D经验，无需再学习新的工具。</p>
+</li>
+</ol>
+<p>然后项目开始后才发现Unity3D WebGL平台有这么多坑，有些可以解决，而有些只能妥协。</p>
+<h3 id="第一坑-·-性能差"><a href="#第一坑-·-性能差" class="headerlink" title="第一坑 · 性能差"></a>第一坑 · 性能差</h3><p>WebGL的性能问题一直是贯穿整个项目的大问题。我们希望我们的项目能够在大多数用户的电脑上都能流畅运行，但WebGL似乎天然不适合这个任务，因为：</p>
+<ol>
+<li><p>首先WebGL是运行在浏览器里的，它受到浏览器的限制较大，比如最大可用内存，3D性能都较低。同时不同的浏览器对WebGL的支持程度不一，如IE不支持Unity WebGL（主要是不支持WebAssembly）；Safari仅支持WebGL 1.0，因此性能较低；Chrome对WebGL支持最好，最高支持WebGL 2.0。这些都将影响程序的渲染性能。</p>
+</li>
+<li><p>WebGL加载需要较长时间。这是因为它本身的体积较大，它需要用户首先下载完整个程序，再进行解码。而用户的网速千千万万，CPU性能各有千秋，下载时间和解码时间都变得不可控。</p>
+</li>
+</ol>
+<p>要保证WebGL的性能，只能尽可能的优化模型，降低三角面数量，尽量不用贴图渲染。同时压缩导入的模型和贴图。在模型Inspector里将Mesh Compression调整到High，如果发现模型变形则将压缩程度降低直到模型完整。在贴图Inspector里调整Max Size，以不影响最终图像质量为标准尽量减小尺寸。Resize Algorithm选用Mitchell，Use Crunch Compress打勾，Compressor Quality设为80以上。</p>
+<p>在编译时勾选Static Batching， Dynamic Batching可以提高渲染速度。勾选Disable HW Statistics，Strip Engine Code，Optimize Mesh Data，Stack Trace全选None可以减小生成的文件大小。如图1。</p>
+<p><img data-src="/2020/06/20/Unity3D-WebGL-%E9%81%BF%E5%9D%91%E6%8C%87%E5%8D%97/Screen%20Shot%202020-06-11%20at%2011.50.14%20PM.png" alt="Screen Shot 2020-06-11 at 11.50.14 PM"></p>
+<p><strong>图1 编译选项</strong></p>
+<p>在发布选项中，设置Enable Exceptions为None，Compression Format为Brotli，注意在Web服务器中也要开启对.unityweb后缀文件Brotli压缩支持，即给.unityweb后缀文件的HTTP Header加上Content-Encoding: br。勾选Data Caching，.unityweb文件会缓存到浏览器的IndexDB里，再次访问不需要再下载。</p>
+<p>开启WebAssembly Streaming会生成一个.wasm文件，可以边下载边加载而不需要等待下载完再加载，注意要同样要在服务器设置.wasm的HTTP Header的Content-Encoding: br以及Content-Type:application/wasm。</p>
+<p>然而在开启WebAssembly Streaming之后，却发生了CompileError: WebAssembly.instantiate(): expected magic word 00 61 73 6d, found 3c 3f 78 6d @+0。因此最终还是关闭了这个选项。如图2。</p>
+<p><img data-src="/2020/06/20/Unity3D-WebGL-%E9%81%BF%E5%9D%91%E6%8C%87%E5%8D%97/Screen%20Shot%202020-06-11%20at%2011.50.25%20PM.png" alt="Screen Shot 2020-06-11 at 11.50.25 PM"></p>
+<p><strong>图2 发布选项</strong></p>
+<p>优化过后程序整体大小从22MB降低到了10MB，可以说是影响巨大。以1MB/s的小水管为标准加载时间从20秒缩短到了10秒，提高了一倍有余。在程序打包上Unity3D还是比较有优势的，如果使用three.js，可能无法像Unity3D一样对模型压缩这么多，而这些模型源文件加起来就有60多MB了。</p>
+<p>另外还有一种优化方法为通过AssetBundle后加载模型或者场景，然而通过实验后发现打包出来的AssetBundle的总容量是整体打包的容量的4倍左右。这样做可能换来了快一点的首屏加载时间，但是程序总容量多出来这么多有一点得不偿失。权衡之后决定放弃这种方法。</p>
+<p>参考<a href="https://docs.unity3d.com/Manual/webgl-building.html" target="_blank" rel="noopener">https://docs.unity3d.com/Manual/webgl-building.html</a></p>
+<p>另一个可以优化首屏加载时间的方法，据说第一个场景不放任何东西，只放一个切换到第二场景的脚本能够显著加快首屏加载时间。这个优化未考证是否有效，不过程序总是需要一个全局控制单元比如场景切换器，所以顺便这样优化了一下也无妨。代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">using System.Collections;</span><br><span class="line">using System.Collections.Generic;</span><br><span class="line">using UnityEngine;</span><br><span class="line">using UnityEngine.SceneManagement;</span><br><span class="line"></span><br><span class="line">public class SceneMgmt : MonoBehaviour</span><br><span class="line">&#123; </span><br><span class="line">  void Start()</span><br><span class="line">  &#123;</span><br><span class="line">    DontDestroyOnLoad(gameObject); 				&#x2F;&#x2F;切换到其他场景也不会销毁这个对象。</span><br><span class="line">    LoadScene(&quot;SecondScene&quot;);  						&#x2F;&#x2F;直接切换到第二场景</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  public void LoadScene(string scene) 		&#x2F;&#x2F;封装SceneManager.LoadScene方法供全局调用</span><br><span class="line">  &#123;</span><br><span class="line">    SceneManager.LoadScene(scene);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>将脚本挂载到第一场景的一个空对象SceneMgmt下，如图3。</p>
+<p><img data-src="/2020/06/20/Unity3D-WebGL-%E9%81%BF%E5%9D%91%E6%8C%87%E5%8D%97/Screen%20Shot%202020-06-11%20at%2011.18.35%20PM.png" alt="Screen Shot 2020-06-11 at 11.18.35 PM"></p>
+<p><strong>图3 第一场景</strong></p>
+<p>这样性能几乎就是极限优化了，就这样加载也需要10秒的时间。然而公司领导还要求加载时间控制在100ms，此处送上一个大耳刮子。</p>
+<h2 id="第二坑-·-UI糊"><a href="#第二坑-·-UI糊" class="headerlink" title="第二坑 · UI糊"></a>第二坑 · UI糊</h2><h3 id="HTML5-UI"><a href="#HTML5-UI" class="headerlink" title="HTML5 UI"></a>HTML5 UI</h3><p>由于WebGL的性能问题，在浏览器上Unity3D WebGL程序不能全分辨率输出，导致用Unity3D内置的UGUI组件在WebGL平台上渲染会十分模糊。有些教程指出可以增加UI局部输出分辨率或者勾选完美匹配像素让文字变清晰，在尝试过后发现效果并不理想。我们最终决定转到使用原生HTML5编写UI。</p>
+<p>在编译Unity3D WebGL平台后，生成的项目文件是以下结构：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="string">Index.html</span>													  <span class="comment"># WebGL首页，在此编写HTML5 UI</span></span><br><span class="line"><span class="string">/Build</span></span><br><span class="line"> <span class="bullet">-</span> <span class="string">*.data.unityweb</span>										<span class="comment"># *表示打包项目名，此文件包含模型，材质，场景等文件</span></span><br><span class="line"> <span class="bullet">-</span> <span class="string">*.wasm.code.unityweb</span>								<span class="comment"># WebAssembly二进制文件</span></span><br><span class="line"> <span class="bullet">-</span> <span class="string">*.wasm.framework.unityweb</span>					<span class="comment"># Unity3D组件框架文件</span></span><br><span class="line"> <span class="bullet">-</span> <span class="string">UnityLoader.js</span>  										<span class="comment"># Unity3D WebGL加载脚本，已加密</span></span><br><span class="line"> <span class="bullet">-</span> <span class="string">*.json</span>	         										<span class="comment"># 配置参数文件</span></span><br><span class="line"> <span class="bullet">-</span> <span class="string">*.jpg</span>         											<span class="comment"># 首屏加载背景图片，在发布时Unity只能选择Dark或Light主																					  题，但是我们可以直接替换这个背景图片，这样可以应用任意																						样式</span></span><br><span class="line"><span class="string">/StreamingAssets</span>											<span class="comment"># StreamingAssets</span></span><br><span class="line"><span class="string">/TemplateData</span>					</span><br><span class="line">	<span class="bullet">-</span> <span class="string">style.css</span>													<span class="comment"># css样式</span></span><br><span class="line">	<span class="bullet">-</span> <span class="string">UnityProgress.js</span>									<span class="comment"># 控制进度条脚本，可在此处修改进度条样式</span></span><br><span class="line">	<span class="bullet">-</span> <span class="string">all</span> <span class="string">other</span> <span class="string">icons</span>										<span class="comment"># 进度条，logo等图片，可替换为自定义图片</span></span><br></pre></td></tr></table></figure>
+
+<p>参考<a href="https://docs.unity3d.com/Manual/webgl-building.html" target="_blank" rel="noopener">https://docs.unity3d.com/Manual/webgl-building.html</a></p>
+<p>在发布编译Unity程序后，我们就可以像编写正常的HTML5 Web App一样编写UI部分了。在Index.html中有：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"webgl-content"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"unityContainer"</span> <span class="attr">style</span>=<span class="string">"width: 1440px; height: 720px"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"footer"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"webgl-logo"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"fullscreen"</span> <span class="attr">onclick</span>=<span class="string">"unityInstance.SetFullscreen(1)"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"title"</span>&gt;</span>project<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>UnityLoader.js会在div#unityContainer元素中加载承载WebGL的canvas等元素，因此该元素不能修改。我们可以自己加入一个div#uiContainer容器在下方，让其置于div#unityContainer的上方：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"webgl-content"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"unityContainer"</span> <span class="attr">style</span>=<span class="string">"width: 1440px; height: 720px"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"uiContainer"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span>   <span class="comment">&lt;!--加入UI容器--&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"footer"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"webgl-logo"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"fullscreen"</span> <span class="attr">onclick</span>=<span class="string">"unityInstance.SetFullscreen(1)"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"title"</span>&gt;</span>project<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>通过css绝对位置和z-index将ui容器置于unity容器上层。</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-id">#uiContainer</span>&#123;</span><br><span class="line">    <span class="attribute">position</span>: absolute;</span><br><span class="line">    <span class="attribute">top</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">left</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">z-index</span>: <span class="number">10</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>通过JavaScript设置uiContainer的大小与unityContainer的大小一样：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">$ = <span class="function">(<span class="params">e</span>) =&gt;</span> <span class="built_in">document</span>.querySelector(e);</span><br><span class="line"></span><br><span class="line">$(<span class="string">"#uiContainer"</span>).style.width = $(<span class="string">"#unityContainer"</span>).style.width;</span><br><span class="line">$(<span class="string">"#uiContainer"</span>).style.height = $(<span class="string">"#unityContainer"</span>).style.height;</span><br></pre></td></tr></table></figure>
+
+<p>为保持UI与WebGL的位置对应，在css里确定UI位置时应使用绝对定位与百分比距离。如：</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-class">.uiElement1</span>&#123;</span><br><span class="line">  <span class="attribute">position</span>: absolute;</span><br><span class="line">  <span class="attribute">top</span>: <span class="number">10%</span>；</span><br><span class="line">  left: <span class="number">10%</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这样UI元素不会因为屏幕或浏览器尺寸变化与Unity3D WebGL程序错位。而为了确保文字元素的可读性，UI元素和文字的高度则应用rem/em标尺，这样还有一个好处就是在做响应式布局时只需要改变根元素（即html元素）文字大小即可适应不同的屏幕尺寸，但不会发生UI定位错误。</p>
+<h2 id="第三坑-·-交互绕"><a href="#第三坑-·-交互绕" class="headerlink" title="第三坑 · 交互绕"></a>第三坑 · 交互绕</h2><h3 id="单页应用与路由"><a href="#单页应用与路由" class="headerlink" title="单页应用与路由"></a>单页应用与路由</h3><p>在Unity3D WebGL程序中我们有不同的场景，常常出现场景切换。一般的Unity3D游戏中，UI都是与场景模型绑定的，因此不需要关心场景切换时UI的同步切换问题。但是由于内置UI模糊的原因，我们的UI其实是与Unity3D WebGL解耦的，因此我们需要将UI与场景绑定。</p>
+<p>很自然的，我们要用到单页应用（Single Page Application，SPA）的架构，因为如果刷新页面了或切换到别的页面了，Unity3D WebGL程序就需要重新载入，这是不能接受的。</p>
+<p>SPA使用前端路由的方式，利用HashTag不刷新页面的机制，将所有的页面跳转连接变为HashTag的形式，使用AJAX异步加载不同页面。此处细节不表。</p>
+<p>在Unity3D WebGL应用的路由中只需再加入：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">unityInstance.SendMessage(<span class="string">"SceneMgmt"</span>, <span class="string">"LoadScene"</span>, scene);</span><br></pre></td></tr></table></figure>
+
+<p>即可在切换UI页面后切换Unity3D场景。unityInstance.SendMessage是在浏览器中调用Unity3D内函数的方法。这里我们调用了在性能一节中我们自己定义的全局对象SceneMgmt上挂载的LoadScene全局方法，传入scene作为参数。</p>
+<p>使用了SPA和前端路由后，我们可以在Unity3D和UI层应用无状态设计，所有的状态将表示为HashTag。</p>
+<h3 id="Unity3D与浏览器交互"><a href="#Unity3D与浏览器交互" class="headerlink" title="Unity3D与浏览器交互"></a>Unity3D与浏览器交互</h3><p>由于我们UI与Unity3D WebGL app分离的设计，浏览器与Unity3D WebGL app的通信与交互十分频繁。在Unity3D的文档中详细介绍了浏览器与Unity3D交互的接口，参考<a href="https://docs.unity3d.com/Manual/webgl-interactingwithbrowserscripting.html" target="_blank" rel="noopener">https://docs.unity3d.com/Manual/webgl-interactingwithbrowserscripting.html</a></p>
+<p>从浏览器调用Unity3D的方法较为简单，就如上一节所说的在浏览器JavaScript中直接调用unityInstance.SendMessage方法即可。</p>
+<p>从Unity3D中调用浏览器方法则需要一些配置：</p>
+<p>在Unity3D项目中新建一个文件，文件后缀改为.jslib，里面定义JavaScript函数：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">mergeInto(LibraryManager.library, &#123;</span><br><span class="line">  <span class="comment">//在此自定义方法，以便从Unity3D的C#脚本调用</span></span><br><span class="line">  Hello: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">window</span>.alert(<span class="string">"Hello, world!"</span>);    					<span class="comment">//在此可以调用浏览器方法，挂载到浏览器window对																									 象上的全局函数等</span></span><br><span class="line">  &#125;，</span><br><span class="line">  HelloString: <span class="function"><span class="keyword">function</span> (<span class="params">str</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">window</span>.alert(Pointer_stringify(str));				<span class="comment">//用字符串参数时必须加上Pointer_stringify，																										不然输出的是数字（字符串的指针）而不是字符串</span></span><br><span class="line">  &#125;,</span><br><span class="line">  AddNumbers: <span class="function"><span class="keyword">function</span> (<span class="params">x, y</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> x + y;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>新建C#脚本：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">using UnityEngine;</span><br><span class="line">using System.Runtime.InteropServices;   								&#x2F;&#x2F;必须导入InteropServices库</span><br><span class="line"></span><br><span class="line">public class NewBehaviourScript : MonoBehaviour &#123;</span><br><span class="line"></span><br><span class="line">    [DllImport(&quot;__Internal&quot;)]           								&#x2F;&#x2F;声明jslib中的方法</span><br><span class="line">    private static extern void Hello();</span><br><span class="line"></span><br><span class="line">    [DllImport(&quot;__Internal&quot;)]														&#x2F;&#x2F;声明jslib中的方法</span><br><span class="line">    private static extern int AddNumbers(int x, int y);</span><br><span class="line">  </span><br><span class="line">  	[DllImport(&quot;__Internal&quot;)]														&#x2F;&#x2F;声明jslib中的方法</span><br><span class="line">    private static extern void HelloString(string str);</span><br><span class="line"></span><br><span class="line">    void Start() &#123;</span><br><span class="line">        Hello();   																			&#x2F;&#x2F;调用jslib中的方法</span><br><span class="line">      	HelloString(&quot;This is a string.&quot;);								&#x2F;&#x2F;调用jslib中的方法</span><br><span class="line">        int result &#x3D; AddNumbers(5, 7);  								&#x2F;&#x2F;调用jslib中的方法</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Unity3D在C#中通过jslib调用浏览器方法，浏览器通过unityInstance.SendMessage调用Unity3D方法，如图4。</p>
+<p><img data-src="/2020/06/20/Unity3D-WebGL-%E9%81%BF%E5%9D%91%E6%8C%87%E5%8D%97/u3djsCommunication.drawio.svg" alt="u3djsCommunication.drawio"></p>
+<p><strong>图4 Unity3D与浏览器交互流程</strong></p>
+<h3 id="回调"><a href="#回调" class="headerlink" title="回调"></a>回调</h3><p>由于Unity3D与浏览器单向通信的特点，浏览器无法知道通过unityInstance.SendMessage调用了Unity3D中方法的执行结果。比如浏览器向Unity3D发送切换场景的消息：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">unityInstance.SendMessage(<span class="string">"SceneMgmt"</span>, <span class="string">"LoadScene"</span>, <span class="string">"SecondScene"</span>);</span><br></pre></td></tr></table></figure>
+
+<p>浏览器无法得知Unity3D的场景是否切换完成了，如果这时候浏览器直接切换到第二场景的UI而Unity3D还未完成场景切换就会产生错误。因此我们需要一个回调方法告知浏览器Unity3D已经完成了这个方法。我们可以利用Unity3D的jslib建立一个回调函数：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">mergeInto(LibraryManager.library, &#123;</span><br><span class="line">	CompletedCallback:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">window</span>.unityCompletedCallback();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>在浏览器调用Unity3D方法时，先定义全局回调函数，再调用Unity3D方法：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">window.unityCompletedCallback &#x3D; () &#x3D;&gt; &#123;</span><br><span class="line">	&#x2F;&#x2F;切换场景完成回调方法</span><br><span class="line">&#125;</span><br><span class="line">unityInstance.SendMessage(&quot;SceneMgmt&quot;, &quot;LoadScene&quot;, &quot;SecondScene&quot;);</span><br></pre></td></tr></table></figure>
+
+<p>再在Unity3D切换场景脚本中在加载场景时调用回调函数通知浏览器已完成场景切换。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">using System.Collections;</span><br><span class="line">using System.Collections.Generic;</span><br><span class="line">using UnityEngine;</span><br><span class="line">using UnityEngine.SceneManagement;</span><br><span class="line"></span><br><span class="line">public class SceneMgmt : MonoBehaviour</span><br><span class="line">&#123; </span><br><span class="line">  void Start()</span><br><span class="line">  &#123;</span><br><span class="line">    DontDestroyOnLoad(gameObject); 				</span><br><span class="line">    LoadScene(&quot;SecondScene&quot;);  						</span><br><span class="line">    if(SceneManager.GetActiveScene().name!&#x3D;&quot;Init&quot;)</span><br><span class="line">    &#123;</span><br><span class="line">      CompletedCallback();														&#x2F;&#x2F;加载场景时通知浏览器</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  public void LoadScene(string scene) 		</span><br><span class="line">  &#123;</span><br><span class="line">    SceneManager.LoadScene(scene);</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  [DllImport(&quot;__Internal&quot;)]           								</span><br><span class="line">  private static extern void CompletedCallback();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们也可以在调用任意Unity3D方法后，用这种方式通知浏览器方法已完成。比如在进行一些耗时的计算、播放动画之后，通知浏览器进行下一步的操作。</p>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>在此我们简单介绍了Unity3D WebGL平台的三个比较坑的地方（第三个其实不算是坑，只能说是特性）并提供了我们的解决方法。WebGL本身还不是十分成熟，性能也非常孱弱，因此在使用Unity3D WebGL平台的时候还是要特别注意做性能优化，降低模型和贴图的体积，降低场景大小。</p>
+]]></content>
+      <categories>
+        <category>Unity3D</category>
+      </categories>
+      <tags>
+        <tag>Unity3D</tag>
+        <tag>WebGL</tag>
+      </tags>
+  </entry>
 </search>
